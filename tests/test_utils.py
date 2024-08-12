@@ -31,6 +31,7 @@ def json_data():
         },
     ]
 
+
 @patch("json.load")
 def test_data_from_json(mock_json_load, json_data):
     mock_json_load.return_value = json_data

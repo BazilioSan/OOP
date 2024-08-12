@@ -1,5 +1,5 @@
 class Product:
-    """"Класс описывающий отдельный продукт"""
+    """ "Класс описывающий отдельный продукт"""
 
     name: str
     description: str
@@ -28,7 +28,6 @@ class Category:
         self.__products = products
         Category.category_count += 1
         Category.product_count += len(self.__products)
-
 
     @property
     def products(self):

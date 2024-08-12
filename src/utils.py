@@ -14,7 +14,6 @@ def get_data_from_json(filename: str) -> List[Dict[str, Any]]:
     return data_json
 
 
-
 # if __name__ == "__main__":
 #     data_to_obj = data_from_json("products.json")
 #     print(data_to_obj)
