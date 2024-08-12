@@ -1,4 +1,6 @@
 class Product:
+    """"Класс описывающий отдельный продукт"""
+
     name: str
     description: str
     price: float
@@ -12,6 +14,8 @@ class Product:
 
 
 class Category:
+    """Класс описывающий категории продуктов"""
+
     name: str
     description: str
     products: list
@@ -24,3 +28,8 @@ class Category:
         self.__products = products
         Category.category_count += 1
         Category.product_count += len(self.__products)
+
+
+    @property
+    def products(self):
+        return self.__products
