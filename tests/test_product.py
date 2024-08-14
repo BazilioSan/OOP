@@ -41,3 +41,19 @@ def test_category_creation():
     assert category.products_list == [product1, product2]
     assert category.product_count == 2
     assert category.category_count == 1
+
+
+def test_str_category(category_1):
+    assert str(category_1) == "Бытовая техника, количество продуктов: 30 шт."
+
+
+def test_category_str(category_3):
+    assert category_3.products == "Насос, 3000 руб. Остаток: 25 шт.\n"
+
+
+def test_add_product(product_1, product_3):
+    assert product_1 + product_3 == 250000
+
+
+def test_str_product(product_1):
+    assert str(product_1) == "Холодильник, 30000 руб. Остаток: 5 шт."
