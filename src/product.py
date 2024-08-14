@@ -16,7 +16,10 @@ class Product:
         return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
 
     def __add__(self, other):
-        return self.__price * self.quantity + other.__price * other.quantity
+        if isinstance(other, self.__class__):
+            return self.__price * self.quantity + other.__price * other.quantity
+        else:
+            raise TypeError
 
     @property
     def price(self):
@@ -62,24 +65,27 @@ class Category:
             total_quantity += item.quantity
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
-    @property
-    def products(self):
-        products_str = ""
-        for product in self.__products:
-            products_str += f"{str(product)}\n"
-        return products_str
+    # @property
+    # def products(self, product: Product):
+    #     products_str = ""
+    #     for product in self.__products:
+    #         products_str += f"{str(product)}\n"
+    #     return products_str
 
-    @property
-    def products_list(self):
-        return self.__products
+    # @property
+    # def products_list(self):
+    #     return self.__products
 
     def add_product(self, product: Product):
-        for item in self.__products:
-            if item.name == product.name:
-                item.quantity += product.quantity
-                if item.price < product.price:
-                    item.price = product.price
-                return
+        if isinstance(product, Product):
+            for item in self.__products:
+                if item.name == product.name:
+                    item.quantity += product.quantity
+                    if item.price < product.price:
+                        item.price = product.price
+                    return
+        else:
+            raise TypeError
         self.__products.append(product)
         Category.product_count += 1
 
@@ -102,3 +108,24 @@ class CatIterator:
             return prod
         else:
             raise StopIteration
+
+
+class LawnGrass(Product):
+    """Класс описывает газонную траву. Родительский класс - Product"""
+
+    def __init__(self, name, description, price, quantity, country, germination_period, color):
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+        super().__init__(name, description, price, quantity)
+
+
+class Smartphone(Product):
+    """Класс описывает смартфоны. Родительский класс - Product"""
+
+    def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+        super().__init__(name, description, price, quantity)
