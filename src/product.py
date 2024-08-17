@@ -1,4 +1,36 @@
-class Product:
+from abc import ABC, abstractmethod
+
+
+class BaseProduct(ABC):
+    """Базовый класс описывающий продукт"""
+
+    @classmethod
+    @abstractmethod
+    def new_product(cls, **kwargs):
+        pass
+
+
+class BaseProductList(ABC):
+    """Базовый класс описания категории продуктов и заказа продуктов.
+    Обладает абстрактным методом отображения продуктов в категории либо в заказе."""
+
+    @abstractmethod
+    def products(self):
+        pass
+
+
+class MixinLog:
+    """Класс_миксин при создании объекта выводит в консоль информацию, от какого класса
+    и с какими параметрами создан объект."""
+
+    def __init__(self):
+        self.__repr__()
+
+    def __repr__(self):
+        print(f"{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})")
+
+
+class Product(BaseProduct, MixinLog):
     """ "Класс описывающий отдельный продукт"""
 
     name: str
@@ -11,6 +43,7 @@ class Product:
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__()
 
     def __str__(self):
         return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
@@ -43,7 +76,7 @@ class Product:
         return Product(**kwargs)
 
 
-class Category:
+class Category(BaseProductList):
     """Класс описывающий категории продуктов"""
 
     name: str

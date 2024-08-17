@@ -1,8 +1,9 @@
-from src.product import Product, Category
-
 from unittest.mock import patch
 
 import pytest
+
+from src.order import Order
+from src.product import Category, LawnGrass, Product, Smartphone
 
 
 def test_product_creation():
@@ -18,7 +19,7 @@ def test_new_product_creation():
         "name": "Samsung Galaxy S21",
         "description": "The latest Samsung flagship",
         "price": 799.99,
-        "quantity": 15
+        "quantity": 15,
     }
     product = Product.new_product(product_data)
     assert product.name == "Samsung Galaxy S21"
@@ -28,7 +29,7 @@ def test_new_product_creation():
 
 
 def test_product_price_change():
-    with patch('builtins.input', return_value='y'):
+    with patch("builtins.input", return_value="y"):
         product = Product("iPhone 13", "The latest iPhone model", 999.99, 10)
         product.price = 899.99
         assert product.price == 899.99
@@ -103,3 +104,48 @@ def test_smartphone_add(smartphone_1, smartphone_2):
 def test_smartphone_add_not_smartphone(smartphone_1, lawngrass_1):
     with pytest.raises(TypeError):
         smartphone_1 + lawngrass_1
+
+
+def test_product_mixin(capsys):
+    Product(name="Холодильник", description="Холодильник LG", price=30000, quantity=5)
+    message = capsys.readouterr()
+    assert message.out.strip() == "Product(Холодильник, Холодильник LG, 30000, 5)"
+
+
+def test_smartphone_mixin(capsys):
+    Smartphone("Iphone 15", "512GB, Gray space", 210000.0, 8, 98.2, "15", 512, "Gray space")
+    message = capsys.readouterr()
+    assert message.out.strip() == "Smartphone(Iphone 15, 512GB, Gray space, 210000.0, 8)"
+
+
+def test_lawn_grass_mixin(capsys):
+    LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20, "Россия", "7 дней", "Зеленый")
+    message = capsys.readouterr()
+    assert message.out.strip() == "LawnGrass(Газонная трава, Элитная трава для газона, 500.0, 20)"
+
+
+def test_order_init(product_3):
+    order = Order(product_3, 10)
+    assert order.products == 'Насос, Насос автомобильный "Силач 3000"'
+    assert order.quantity == 10
+    assert order.total_price == 40000
+
+
+def test_order_new_quantity(product_3):
+    order = Order(product_3, 10)
+    assert order.products == 'Насос, Насос автомобильный "Силач 3000"'
+    assert order.quantity == 10
+    assert order.total_price == 40000
+    order.quantity = 15
+    assert order.products == 'Насос, Насос автомобильный "Силач 3000"'
+    assert order.quantity == 25
+    assert order.total_price == 100000
+
+
+def test_order_new_product(product_3):
+    order = Order(product_3, 10)
+    assert order.products == 'Насос, Насос автомобильный "Силач 3000"'
+    assert order.quantity == 10
+    assert order.total_price == 40000
+    with pytest.raises(ValueError):
+        order.products = "New_product"
