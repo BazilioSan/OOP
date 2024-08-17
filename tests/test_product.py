@@ -61,7 +61,6 @@ def test_add_product(product_1, product_3):
 def test_str_product(product_1):
     assert str(product_1) == "Холодильник, 30000 руб. Остаток: 5 шт."
 
-
 def test_add_category_not_product(category_3, fake_product):
     with pytest.raises(TypeError):
         category_3.add_product(fake_product)
@@ -149,3 +148,4 @@ def test_order_new_product(product_3):
     assert order.total_price == 40000
     with pytest.raises(ValueError):
         order.products = "New_product"
+        

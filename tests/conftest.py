@@ -3,6 +3,7 @@ import pytest
 from src.product import Product, Category, Smartphone, LawnGrass
 
 
+
 @pytest.fixture
 def product_1():
     return Product(name="Холодильник", description="Холодильник LG", price=30000, quantity=5)
