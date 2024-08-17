@@ -2,6 +2,8 @@ from src.product import Product, Category
 
 from unittest.mock import patch
 
+import pytest
+
 
 def test_product_creation():
     product = Product("iPhone 13", "The latest iPhone model", 999.99, 10)
@@ -41,3 +43,63 @@ def test_category_creation():
     assert category.products_list == [product1, product2]
     assert category.product_count == 2
     assert category.category_count == 1
+
+
+def test_str_category(category_1):
+    assert str(category_1) == "Бытовая техника, количество продуктов: 30 шт."
+
+
+def test_category_str(category_3):
+    assert category_3.products == "Насос, 3000 руб. Остаток: 25 шт.\n"
+
+
+def test_add_product(product_1, product_3):
+    assert product_1 + product_3 == 250000
+
+
+def test_str_product(product_1):
+    assert str(product_1) == "Холодильник, 30000 руб. Остаток: 5 шт."
+
+
+def test_add_category_not_product(category_3, fake_product):
+    with pytest.raises(TypeError):
+        category_3.add_product(fake_product)
+
+
+def test_lawn_grass_init(lawngrass_1):
+    assert lawngrass_1.name == "Газонная трава"
+    assert lawngrass_1.description == "Элитная трава для газона"
+    assert lawngrass_1.price == 500.0
+    assert lawngrass_1.quantity == 20
+    assert lawngrass_1.country == "Россия"
+    assert lawngrass_1.germination_period == "7 дней"
+    assert lawngrass_1.color == "Зеленый"
+
+
+def test_lawn_grass_add(lawngrass_1, lawngrass_2):
+    assert lawngrass_1 + lawngrass_2 == 15000.0
+
+
+def test_lawn_grass_add_not_grass(lawngrass_1, smartphone_1):
+    with pytest.raises(TypeError):
+        lawngrass_1 + smartphone_1
+
+
+def test_smartphone_init(smartphone_1):
+    assert smartphone_1.name == "Iphone 15"
+    assert smartphone_1.description == "512GB, Gray space"
+    assert smartphone_1.price == 210000.0
+    assert smartphone_1.quantity == 8
+    assert smartphone_1.efficiency == 98.2
+    assert smartphone_1.model == "15"
+    assert smartphone_1.memory == 512
+    assert smartphone_1.color == "Gray space"
+
+
+def test_smartphone_add(smartphone_1, smartphone_2):
+    assert smartphone_1 + smartphone_2 == 4200000.0
+
+
+def test_smartphone_add_not_smartphone(smartphone_1, lawngrass_1):
+    with pytest.raises(TypeError):
+        smartphone_1 + lawngrass_1
