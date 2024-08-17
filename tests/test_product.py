@@ -149,3 +149,19 @@ def test_order_new_product(product_3):
     assert order.total_price == 40000
     with pytest.raises(ValueError):
         order.products = "New_product"
+
+
+def test_category_middle_price(cat_for_middle_price):
+    category = Category(name="test", description="test", products=cat_for_middle_price)
+    assert category.middle_price() == 111629.63
+
+
+def test_category_middle_price_no_products():
+    category = Category(name="test", description="test", products=[])
+    result = category.middle_price()
+    assert result == 0
+
+
+def test_product_zero_quantity():
+    with pytest.raises(ValueError):
+        product = Product(name="Насос", description='Насос автомобильный "Силач 3000"', price=4000, quantity=0)

@@ -43,6 +43,10 @@ class Product(BaseProduct, MixinLog):
         self.description = description
         self.__price = price
         self.quantity = quantity
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
+        else:
+            self.quantity = quantity
         super().__init__()
 
     def __str__(self):
@@ -121,6 +125,19 @@ class Category(BaseProductList):
             raise TypeError
         self.__products.append(product)
         Category.product_count += 1
+
+    def middle_price(self):
+        try:
+            total_price = 0
+            total_quantity = 0
+            for product in self.__products:
+                total_price += product.price * product.quantity
+                total_quantity += product.quantity
+            avg_price = total_price / total_quantity
+        except ZeroDivisionError:
+            return 0
+        else:
+            return round(avg_price, 2)
 
 
 class CatIterator:

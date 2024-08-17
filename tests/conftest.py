@@ -84,6 +84,7 @@ def json_data():
         },
     ]
 
+
 @pytest.fixture
 def fake_product():
     return "fake_product"
@@ -107,3 +108,16 @@ def lawngrass_1():
 @pytest.fixture
 def lawngrass_2():
     return LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 10, "Россия", "7 дней", "Зеленый")
+
+
+@pytest.fixture
+def product_4():
+    return Product(name="Насос", description='Насос автомобильный "Силач 3000"', price=4000, quantity=0)
+
+
+@pytest.fixture
+def cat_for_middle_price():
+    product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+    product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
+    return [product1, product2, product3]
