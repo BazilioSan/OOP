@@ -65,16 +65,16 @@ class Category:
             total_quantity += item.quantity
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
-    # @property
-    # def products(self, product: Product):
-    #     products_str = ""
-    #     for product in self.__products:
-    #         products_str += f"{str(product)}\n"
-    #     return products_str
+    @property
+    def products(self):
+        products_str = ""
+        for product in self.__products:
+            products_str += f"{str(product)}\n"
+        return products_str
 
-    # @property
-    # def products_list(self):
-    #     return self.__products
+    @property
+    def products_list(self):
+        return self.__products
 
     def add_product(self, product: Product):
         if isinstance(product, Product):
